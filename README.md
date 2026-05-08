@@ -152,7 +152,7 @@
 #### 我自己每天在用的一些 AI 技能和 Prompt，都开源在这里
 
 [![License](https://img.shields.io/badge/License-MIT-3B82F6?style=for-the-badge)](./LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-3-10B981?style=for-the-badge)](#-skills)
+[![Skills](https://img.shields.io/badge/Skills-4-10B981?style=for-the-badge)](#-skills)
 [![Prompts](https://img.shields.io/badge/Prompts-1-F59E0B?style=for-the-badge)](#-prompts)
 [![AgentSkills](https://img.shields.io/badge/AgentSkills-Standard-8B5CF6?style=for-the-badge)](https://agentskills.io)
 
@@ -179,6 +179,7 @@
 | 🧹 [**neat-freak（洁癖）**](#-neat-freak洁癖) | 干完活跑一下 `/neat`，自动把你这次改的东西跟项目文档、CLAUDE.md、Agent 记忆全部对齐 | [公众号文章](https://mp.weixin.qq.com/s/tg1wd-iN2gWHWhXdY0faeg) |
 | 🔭 [**hv-analysis（横纵分析法）**](#-hv-analysis横纵分析法) | 想搞懂一个产品/公司/概念是怎么回事，丢给它，给你一份万字 PDF 研究报告 | [公众号文章](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA) |
 | ✍️ [**khazix-writer（卡兹克写作）**](#-khazix-writer卡兹克写作) | 装上之后，Agent 用我的口吻和节奏写公众号长文 | [公众号文章](https://mp.weixin.qq.com/s/AtxGrii_K-nzkwUM9SNhEg) |
+| 🔥 [**aihot（AI HOT 资讯查询）**](#-aihotai-hot-资讯查询) | 让 Agent 用一句话拿到 aihot.virxact.com 每天的 AI HOT 日报和全部 AI 动态，无需 API Key | [aihot.virxact.com](https://aihot.virxact.com) |
 
 ### Prompts
 
@@ -305,6 +306,46 @@ sync up          # English
 [![Tessl](https://img.shields.io/badge/Tessl-0.1.1-3B82F6?style=flat-square)](https://tessl.io/registry/khazix-skills/khazix-writer)
 
 → [SKILL.md](./khazix-writer/SKILL.md) · [公众号讲解](https://mp.weixin.qq.com/s/AtxGrii_K-nzkwUM9SNhEg)
+
+</td></tr>
+</table>
+
+<table>
+<tr><td>
+
+### 🔥 aihot（AI HOT 资讯查询）
+
+> *"AI 圈一天发太多东西，等我反应过来已经过气了——干脆让 Agent 帮我每天扫一遍。"*
+
+让支持 SKILL.md 的 Agent 用最自然的中文一句话拿到 [aihot.virxact.com](https://aihot.virxact.com) 每天的 AI HOT 日报和全部 AI 动态。无需 API Key、无需配 MCP server。
+
+**它能做什么**
+
+- 拉今日 / 指定日期的 AI HOT 日报（按主题打包好的成品）
+- 拉精选条目流（每日精编候选池）
+- 按分类拉条目（模型 / 产品 / 行业 / 论文 / 技巧）
+- 按时间窗口拉（最近 N 天）
+- 关键词 / 公司 / 主题搜索（"OpenAI 最近发的"、"Sora 相关"、"RAG 论文"）
+
+**怎么触发**
+
+```
+今天 AI 圈有什么新东西
+看一下 5 月 6 号的 AI 日报
+最近一周的 AI 论文
+看下精选条目
+最近 OpenAI 有什么发布
+```
+
+**🌐 跨平台**：Claude Code · Codex CLI · Cursor · Gemini CLI · OpenCode · Cline · Windsurf
+
+**🇨🇳 国内直链**（无需翻墙）：
+
+```
+curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh | bash
+```
+
+→ [SKILL.md](./aihot/SKILL.md) · [aihot.virxact.com](https://aihot.virxact.com) · [接入指南](https://aihot.virxact.com/agent)
 
 </td></tr>
 </table>
