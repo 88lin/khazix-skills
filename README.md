@@ -152,7 +152,7 @@
 #### 我自己每天在用的一些 AI 技能和 Prompt，都开源在这里
 
 [![License](https://img.shields.io/badge/License-MIT-3B82F6?style=for-the-badge)](./LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-4-10B981?style=for-the-badge)](#-skills)
+[![Skills](https://img.shields.io/badge/Skills-5-10B981?style=for-the-badge)](#-skills)
 [![Prompts](https://img.shields.io/badge/Prompts-1-F59E0B?style=for-the-badge)](#-prompts)
 [![AgentSkills](https://img.shields.io/badge/AgentSkills-Standard-8B5CF6?style=for-the-badge)](https://agentskills.io)
 
@@ -180,6 +180,7 @@
 | 🔭 [**hv-analysis（横纵分析法）**](#-hv-analysis横纵分析法) | 想搞懂一个产品/公司/概念是怎么回事，丢给它，给你一份万字 PDF 研究报告 | [公众号文章](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA) |
 | ✍️ [**khazix-writer（卡兹克写作）**](#-khazix-writer卡兹克写作) | 装上之后，Agent 用我的口吻和节奏写公众号长文 | [公众号文章](https://mp.weixin.qq.com/s/AtxGrii_K-nzkwUM9SNhEg) |
 | 🔥 [**aihot（AI HOT 资讯查询）**](#-aihotai-hot-资讯查询) | 让 Agent 用一句话拿到 aihot.virxact.com 每天的 AI HOT 日报和全部 AI 动态，无需 API Key | [aihot.virxact.com](https://aihot.virxact.com) |
+| 💽 [**storage-analyzer（清理垃圾）**](#-storage-analyzer清理垃圾) | 一句话扫描 Mac / Windows 整机磁盘，三色分级给清理决策，网页上一键移废纸篓 | 公众号文章（即将发布） |
 
 ### Prompts
 
@@ -346,6 +347,48 @@ curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh | bash
 ```
 
 → [SKILL.md](./aihot/SKILL.md) · [aihot.virxact.com](https://aihot.virxact.com) · [接入指南](https://aihot.virxact.com/agent)
+
+</td></tr>
+</table>
+
+<table>
+<tr><td>
+
+### 💽 storage-analyzer（清理垃圾）
+
+> *"清 Mac 垃圾这件事，过去十几年都靠 CleanMyMac 这种翻译层软件。现在一个 skill 就够了。"*
+
+随口跟 Agent 说一句"帮我看看存储"或"C 盘满了"，它会扫一遍整机磁盘，在浏览器里打开一份**交互式 HTML 报告**：磁盘总览、占用 Top 5、清理优先级、🟢🟡🔴 三色分级清单。命令一键复制，也可以直接点按钮移到废纸篓 / 删除（每次都有二次确认弹窗）。
+
+**它和 CleanMyMac 的区别**
+
+CleanMyMac 是个写死规则的软件，扫到一个 3.8G 的 Chrome 文件夹只会告诉你"用户缓存文件，可删"——但你不知道里面到底是什么、删了哪些网站要重新登录。
+
+这个 skill 由 Agent 驱动，每一项都给你**具体路径 + 类型说明 + 删了的影响 + 推荐处置方式**。比如那 97 GB 的 UUID Container 它会告诉你是 B 站离线视频缓存、建议在 B 站客户端里清而不是手删。
+
+**三色分级是核心**
+
+- 🟢 **绿灯** — 纯缓存、临时文件，删了自动再生。可以让 Agent 一键清
+- 🟡 **黄灯** — 含用户数据（离线视频、下载、项目代码）。只给"在访达打开"和"移废纸篓"，让你自己决定，不给直接删
+- 🔴 **红灯** — 运行中应用核心数据、系统文件。解释为什么不能动，最多给"打开文件夹"，永远不给删除按钮
+
+**铁律**
+
+全程只读扫描，绝不擅自动手。删除操作必须你在浏览器上点按钮 + 浏览器弹框二次确认才执行。本地服务跑在 127.0.0.1 + 随机端口 + token，安全模型上三套白名单分级（绿灯能删、橙灯只能移废纸篓、红灯只能打开）。
+
+**🌐 跨平台**：macOS 完整实测；Windows 代码就绪（多盘符已支持），首次用建议留个心眼
+
+**怎么触发**
+
+```
+帮我看看存储
+C 盘满了
+清理一下磁盘
+看下电脑空间
+storage analysis
+```
+
+→ [SKILL.md](./storage-analyzer/SKILL.md)
 
 </td></tr>
 </table>
