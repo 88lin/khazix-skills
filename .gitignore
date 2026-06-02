@@ -14,4 +14,6 @@
 .claude/settings.local.json
 
 # Internal project instructions (not for public repo)
+# AGENTS.md is a symlink to CLAUDE.md — same secret content, must also be ignored
 CLAUDE.md
+AGENTS.md

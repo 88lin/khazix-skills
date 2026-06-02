@@ -4,11 +4,10 @@
 
 # 🧰 Khazix Skills
 
-#### A few AI skills and prompts I actually use every day, open-sourced as-is
+#### A few AI skills I actually use every day, open-sourced as-is
 
 [![License](https://img.shields.io/badge/License-MIT-3B82F6?style=for-the-badge)](./LICENSE)
 [![Skills](https://img.shields.io/badge/Skills-5-10B981?style=for-the-badge)](#-skills)
-[![Prompts](https://img.shields.io/badge/Prompts-1-F59E0B?style=for-the-badge)](#-prompts)
 [![AgentSkills](https://img.shields.io/badge/AgentSkills-Standard-8B5CF6?style=for-the-badge)](https://agentskills.io)
 
 ![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-D97706?style=flat-square&logo=anthropic&logoColor=white)
@@ -20,14 +19,11 @@
 
 Each one was running in my own projects long enough to prove it actually saves time before I bothered open-sourcing it. No hype — just a few useful things.
 
-- **Skills** — Structured instruction sets that agents load directly. Follows the [Agent Skills](https://agentskills.io) open standard. Works with Claude Code, Codex, OpenCode, and OpenClaw
-- **Prompts** — A single block of text you paste into ChatGPT / Claude / Gemini / any chat. No installation needed
+Every skill here is a structured instruction set that agents load directly. Follows the [Agent Skills](https://agentskills.io) open standard. Works with Claude Code, Codex, OpenCode, and OpenClaw.
 
 ---
 
 ## 📋 Index
-
-### Skills
 
 | Name | One-liner | Article |
 |---|---|---|
@@ -35,13 +31,7 @@ Each one was running in my own projects long enough to prove it actually saves t
 | 🔭 [**hv-analysis**](#-hv-analysis) | Drop a product/company/concept into it and get a 10k–30k word PDF research report | [Article (Chinese)](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA) |
 | ✍️ [**khazix-writer**](#-khazix-writer) | Makes the agent write long-form Chinese articles in my personal voice | [Article (Chinese)](https://mp.weixin.qq.com/s/AtxGrii_K-nzkwUM9SNhEg) |
 | 🔥 [**aihot**](#-aihot-ai-hot-news-query) | Lets your agent pull AI HOT's daily report and all AI news from aihot.virxact.com with one Chinese sentence — no API key | [aihot.virxact.com](https://aihot.virxact.com) |
-| 💽 [**storage-analyzer**](#-storage-analyzer) | One sentence to scan your whole Mac / Windows drive — three-tier cleanup plan, one-click trash from the browser | Article (Chinese, coming soon) |
-
-### Prompts
-
-| Name | One-liner | Article |
-|---|---|---|
-| 🔭 [**hv-analysis (Prompt edition)**](#-hv-analysis-prompt-edition) | Lighter version of the skill above — paste it into any Deep Research model | [Article (Chinese)](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA) |
+| 💽 [**storage-analyzer**](#-storage-analyzer) | One sentence to scan your whole Mac / Windows drive — three-tier cleanup plan, one-click trash from the browser | [Article (Chinese)](https://mp.weixin.qq.com/s/NyOMIlOD986OC4SI9vmxlA) |
 
 ---
 
@@ -245,29 +235,7 @@ storage analysis
 帮我看看存储
 ```
 
-→ [SKILL.md](./storage-analyzer/SKILL.md)
-
-</td></tr>
-</table>
-
----
-
-## 📝 Prompts
-
-<a id="-prompts"></a>
-
-<table>
-<tr><td>
-
-### 🔭 hv-analysis (Prompt edition)
-
-A **lighter version** of the hv-analysis skill above — a single prompt you paste into any Deep Research model (ChatGPT Deep Research, Gemini Deep Research, Grok Deep Search, Claude Research). No installation required.
-
-About 30 minutes to a 10k+ word research report.
-
-Good for people who haven't picked up Claude Code / Codex yet but still want to try the method.
-
-→ [横纵分析法.md](./prompts/横纵分析法.md) · [Article (Chinese)](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA)
+→ [SKILL.md](./storage-analyzer/SKILL.md) · [Article (Chinese)](https://mp.weixin.qq.com/s/NyOMIlOD986OC4SI9vmxlA)
 
 </td></tr>
 </table>
@@ -276,7 +244,7 @@ Good for people who haven't picked up Claude Code / Codex yet but still want to 
 
 ## 🌟 About
 
-I'm Khazix (数字生命卡兹克). Founder of Virxact. Background in visual communication design, with stints in user research and interaction design — **I'm not a programmer**. My day job is translating AI into things normal people can actually understand and use.
+I'm Khazix (数字生命卡兹克), founder of Virxact. I try to share fun, practical AI know-how — and may we always stay curious about the world.
 
 These skills are what I personally use every day. If they help you, a ⭐ is appreciated. Questions or suggestions welcome in Issues / Discussions.
 
