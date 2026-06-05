@@ -7,7 +7,7 @@
 #### A few AI skills I actually use every day, open-sourced as-is
 
 [![License](https://img.shields.io/badge/License-MIT-3B82F6?style=for-the-badge)](./LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-5-10B981?style=for-the-badge)](#-skills)
+[![Skills](https://img.shields.io/badge/Skills-6-10B981?style=for-the-badge)](#-skills)
 [![AgentSkills](https://img.shields.io/badge/AgentSkills-Standard-8B5CF6?style=for-the-badge)](https://agentskills.io)
 
 ![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-D97706?style=flat-square&logo=anthropic&logoColor=white)
@@ -27,11 +27,11 @@ Every skill here is a structured instruction set that agents load directly. Foll
 
 | Name | One-liner | Article |
 |---|---|---|
-| 🧹 [**neat-freak**](#-neat-freak) | After a session, run `/neat` to reconcile your project docs, CLAUDE.md, and agent memory with the code | [Article (Chinese)](https://mp.weixin.qq.com/s/tg1wd-iN2gWHWhXdY0faeg) |
-| 🔭 [**hv-analysis**](#-hv-analysis) | Drop a product/company/concept into it and get a 10k–30k word PDF research report | [Article (Chinese)](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA) |
-| ✍️ [**khazix-writer**](#-khazix-writer) | Makes the agent write long-form Chinese articles in my personal voice | [Article (Chinese)](https://mp.weixin.qq.com/s/AtxGrii_K-nzkwUM9SNhEg) |
-| 🔥 [**aihot**](#-aihot-ai-hot-news-query) | Lets your agent pull AI HOT's daily report and all AI news from aihot.virxact.com with one Chinese sentence — no API key | [aihot.virxact.com](https://aihot.virxact.com) |
 | 💽 [**storage-analyzer**](#-storage-analyzer) | One sentence to scan your whole Mac / Windows drive — three-tier cleanup plan, one-click trash from the browser | [Article (Chinese)](https://mp.weixin.qq.com/s/NyOMIlOD986OC4SI9vmxlA) |
+| 🔥 [**aihot**](#-aihot-ai-hot-news-query) | Lets your agent pull AI HOT's daily report and all AI news from aihot.virxact.com with one Chinese sentence — no API key | [aihot.virxact.com](https://aihot.virxact.com) |
+| 🧹 [**neat-freak**](#-neat-freak) | After a session, run `/neat` to reconcile your project docs, CLAUDE.md, and agent memory with the code | [Article (Chinese)](https://mp.weixin.qq.com/s/tg1wd-iN2gWHWhXdY0faeg) |
+| 🔭 [**hv-analysis**](#-hv-analysis-horizontal-vertical-analysis) | Drop a product/company/concept into it and get a 10k–30k word PDF research report | [Article (Chinese)](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA) |
+| ✍️ [**khazix-writer**](#-khazix-writer) | Makes the agent write long-form Chinese articles in my personal voice | [Article (Chinese)](https://mp.weixin.qq.com/s/AtxGrii_K-nzkwUM9SNhEg) |
 
 ---
 
@@ -50,6 +50,88 @@ Replace `<skill-name>` with the one you want — e.g. `neat-freak`, `hv-analysis
 ## ✨ Skills
 
 <a id="-skills"></a>
+
+<table>
+<tr><td>
+
+### 💽 storage-analyzer
+
+> *"Cleaning Mac junk has been a CleanMyMac job for a decade. Now a single skill replaces it."*
+
+Tell your agent something like "check my storage" or "C: drive is full". It scans your whole disk and opens an **interactive HTML report** in your browser: disk overview, top 5 space hogs, prioritized cleanup, and a 🟢🟡🔴 three-tier list. Every command is one-click-copy; you can also click buttons to move to Trash / delete (always with a second confirmation dialog).
+
+**Why it beats CleanMyMac**
+
+CleanMyMac is a hard-coded program. It'll show you a 3.8 GB Chrome folder labeled "user cache, safe to delete" — but you don't know what's actually inside, which sites you'll log out of, which offline data will be gone.
+
+This skill is agent-driven. Every entry comes with **specific path + content classification + impact of deletion + recommended action**. That mysterious 97 GB UUID Container? It'll tell you it's the Bilibili offline video cache and suggest you clean it through the Bilibili app, not by hand.
+
+**Three-tier classification is the core**
+
+- 🟢 **Green** — Pure caches, temp files. Regenerate automatically. Safe for one-click cleanup
+- 🟡 **Yellow** — Contains user data (offline videos, downloads, project code). Only "Open in Finder" and (where safe) "Move to Trash". You decide
+- 🔴 **Red** — Running app core data, system files. Explains why not to touch, gives at most "Open folder". Never a delete button
+
+**Hard rules**
+
+Scan phase is **read-only**, period. Deletions require **two clicks** — button on the page, then a browser confirm dialog. The local server runs on 127.0.0.1 + random port + token, with three whitelists (green = can rm; yellow = trash only; both = open).
+
+**🌐 Cross-platform**: macOS fully tested; Windows code-ready (multi-drive supported), worth eyeballing on first run
+
+**How to trigger**
+
+```
+check my storage
+C drive is full
+clean up disk
+storage analysis
+帮我看看存储
+```
+
+→ [SKILL.md](./storage-analyzer/SKILL.md) · [Article (Chinese)](https://mp.weixin.qq.com/s/NyOMIlOD986OC4SI9vmxlA)
+
+</td></tr>
+</table>
+
+<table>
+<tr><td>
+
+### 🔥 aihot (AI HOT news query)
+
+> *"The AI world ships too much in a day. By the time I notice, it's already old news — let an agent scan it for me."*
+
+Lets any SKILL.md-supporting agent pull AI HOT's daily report and all AI news from [aihot.virxact.com](https://aihot.virxact.com) with one natural Chinese sentence. No API key, no MCP server config.
+
+**What it can do**
+
+- Pull today's or a specific date's AI HOT daily report (pre-packaged by topic)
+- Pull the selected items stream (daily editorial candidate pool)
+- Pull by category (models / products / industry / papers / tips)
+- Pull by time window (last N days)
+- Keyword / company / topic search ("recent OpenAI releases", "Sora-related", "RAG papers")
+
+**How to trigger** (Chinese — the underlying API is Chinese-curated)
+
+```
+今天 AI 圈有什么新东西
+看一下 5 月 6 号的 AI 日报
+最近一周的 AI 论文
+看下精选条目
+最近 OpenAI 有什么发布
+```
+
+**🌐 Cross-platform**: Claude Code · Codex CLI · Cursor · Gemini CLI · OpenCode · Cline · Windsurf
+
+**🇨🇳 China-friendly direct install** (no GitHub access needed):
+
+```
+curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh | bash
+```
+
+→ [SKILL.md](./aihot/SKILL.md) · [aihot.virxact.com](https://aihot.virxact.com) · [Integration guide](https://aihot.virxact.com/agent)
+
+</td></tr>
+</table>
 
 <table>
 <tr><td>
@@ -154,88 +236,6 @@ You want "good general writing." This skill takes a position. It **refuses** cor
 [![Tessl](https://img.shields.io/badge/Tessl-0.1.1-3B82F6?style=flat-square)](https://tessl.io/registry/khazix-skills/khazix-writer)
 
 → [SKILL.md](./khazix-writer/SKILL.md) · [Article (Chinese)](https://mp.weixin.qq.com/s/AtxGrii_K-nzkwUM9SNhEg)
-
-</td></tr>
-</table>
-
-<table>
-<tr><td>
-
-### 🔥 aihot (AI HOT news query)
-
-> *"The AI world ships too much in a day. By the time I notice, it's already old news — let an agent scan it for me."*
-
-Lets any SKILL.md-supporting agent pull AI HOT's daily report and all AI news from [aihot.virxact.com](https://aihot.virxact.com) with one natural Chinese sentence. No API key, no MCP server config.
-
-**What it can do**
-
-- Pull today's or a specific date's AI HOT daily report (pre-packaged by topic)
-- Pull the selected items stream (daily editorial candidate pool)
-- Pull by category (models / products / industry / papers / tips)
-- Pull by time window (last N days)
-- Keyword / company / topic search ("recent OpenAI releases", "Sora-related", "RAG papers")
-
-**How to trigger** (Chinese — the underlying API is Chinese-curated)
-
-```
-今天 AI 圈有什么新东西
-看一下 5 月 6 号的 AI 日报
-最近一周的 AI 论文
-看下精选条目
-最近 OpenAI 有什么发布
-```
-
-**🌐 Cross-platform**: Claude Code · Codex CLI · Cursor · Gemini CLI · OpenCode · Cline · Windsurf
-
-**🇨🇳 China-friendly direct install** (no GitHub access needed):
-
-```
-curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh | bash
-```
-
-→ [SKILL.md](./aihot/SKILL.md) · [aihot.virxact.com](https://aihot.virxact.com) · [Integration guide](https://aihot.virxact.com/agent)
-
-</td></tr>
-</table>
-
-<table>
-<tr><td>
-
-### 💽 storage-analyzer
-
-> *"Cleaning Mac junk has been a CleanMyMac job for a decade. Now a single skill replaces it."*
-
-Tell your agent something like "check my storage" or "C: drive is full". It scans your whole disk and opens an **interactive HTML report** in your browser: disk overview, top 5 space hogs, prioritized cleanup, and a 🟢🟡🔴 three-tier list. Every command is one-click-copy; you can also click buttons to move to Trash / delete (always with a second confirmation dialog).
-
-**Why it beats CleanMyMac**
-
-CleanMyMac is a hard-coded program. It'll show you a 3.8 GB Chrome folder labeled "user cache, safe to delete" — but you don't know what's actually inside, which sites you'll log out of, which offline data will be gone.
-
-This skill is agent-driven. Every entry comes with **specific path + content classification + impact of deletion + recommended action**. That mysterious 97 GB UUID Container? It'll tell you it's the Bilibili offline video cache and suggest you clean it through the Bilibili app, not by hand.
-
-**Three-tier classification is the core**
-
-- 🟢 **Green** — Pure caches, temp files. Regenerate automatically. Safe for one-click cleanup
-- 🟡 **Yellow** — Contains user data (offline videos, downloads, project code). Only "Open in Finder" and (where safe) "Move to Trash". You decide
-- 🔴 **Red** — Running app core data, system files. Explains why not to touch, gives at most "Open folder". Never a delete button
-
-**Hard rules**
-
-Scan phase is **read-only**, period. Deletions require **two clicks** — button on the page, then a browser confirm dialog. The local server runs on 127.0.0.1 + random port + token, with three whitelists (green = can rm; yellow = trash only; both = open).
-
-**🌐 Cross-platform**: macOS fully tested; Windows code-ready (multi-drive supported), worth eyeballing on first run
-
-**How to trigger**
-
-```
-check my storage
-C drive is full
-clean up disk
-storage analysis
-帮我看看存储
-```
-
-→ [SKILL.md](./storage-analyzer/SKILL.md) · [Article (Chinese)](https://mp.weixin.qq.com/s/NyOMIlOD986OC4SI9vmxlA)
 
 </td></tr>
 </table>
