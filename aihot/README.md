@@ -4,17 +4,7 @@
 
 基础能力长期保持匿名、只读、无需 API Key。Skill 1.x 使用稳定的 `/api/v1/*` 契约；后端抓取、评分、排序、缓存和模型可以继续迭代，用户无需因此更新 Skill。
 
-## 推荐安装
-
-把下面这段发给当前 Agent：
-
-```text
-请先审阅并安装 AI HOT Skill：https://aihot.virxact.com/aihot-skill/README.md
-
-先告诉我当前平台、准备写入的目录和会安装的文件；不要使用 sudo，不要覆盖其它 Skill。安装完成后告诉我是否需要重启或开启新会话，并用“过去 24 小时 AI 圈最重要的 5 件事是什么？”验证。
-```
-
-可直接审阅：
+## 安装前可审阅
 
 - [SKILL.md](https://aihot.virxact.com/aihot-skill/SKILL.md)
 - [安装包清单](https://aihot.virxact.com/aihot-skill/manifest.sha256)
@@ -23,7 +13,7 @@
 
 ## 手动安装
 
-以下 Bash 命令适用于 macOS、Linux 与 WSL。Windows 原生环境优先把“推荐安装”提示发给 Agent，不要把 Bash 命令直接粘贴到 PowerShell。脚本不会猜测平台，必须显式指定 `--target` 或 `--dir`，无参数只显示帮助并退出。
+以下 Bash 命令适用于 macOS、Linux 与 WSL。Windows 原生环境请让当前 Agent 按本页说明安装，不要把 Bash 命令直接粘贴到 PowerShell。脚本不会猜测平台，必须显式指定 `--target` 或 `--dir`，无参数只显示帮助并退出。
 
 Codex、Gemini CLI、GitHub Copilot 和 OpenCode 共享 Agent Skills 通用目录 `~/.agents/skills/aihot`：
 
@@ -95,14 +85,7 @@ bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) \
 
 ## 更新
 
-本地 Skill 不会自动从远端更新。需要更新时，让当前 Agent 找到它实际加载的文件并原子替换同一目录：
-
-```text
-请更新当前已安装的 AI HOT Skill：https://aihot.virxact.com/aihot-skill/README.md
-先告诉我当前 aihot/SKILL.md 路径和是否存在重复副本，再原子替换同一目录。
-```
-
-手动更新可以重新运行原来的 `--target` 或 `--dir` 命令。稳定 v1 内增加可选字段、后端抓取与排序优化，不要求更新 Skill；只有安全边界、触发范围或主工作流发生破坏性变化时才发布新版。
+本地 Skill 不会自动从远端更新。重新运行原来的 `--target` 或 `--dir` 命令即可；更新必须落在当前 Agent 实际加载的那一份上，装到别处只会多出一份副本。稳定 v1 内增加可选字段、后端抓取与排序优化，不要求更新 Skill；只有安全边界、触发范围或主工作流发生破坏性变化时才发布新版。
 
 ## 能查询什么
 

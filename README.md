@@ -152,7 +152,7 @@
 #### 我自己每天在用的一些 AI Skill，都开源在这里
 
 [![License](https://img.shields.io/badge/License-MIT-3B82F6?style=for-the-badge)](./LICENSE)
-[![Skills](https://img.shields.io/badge/Skills-5-10B981?style=for-the-badge)](#-skills)
+[![Skills](https://img.shields.io/badge/Skills-6-10B981?style=for-the-badge)](#-skills)
 [![AgentSkills](https://img.shields.io/badge/AgentSkills-Standard-8B5CF6?style=for-the-badge)](https://agentskills.io)
 
 ![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-D97706?style=flat-square&logo=anthropic&logoColor=white)
@@ -171,6 +171,7 @@
 
 | 名字 | 一句话 | 讲解 |
 |---|---|---|
+| 🧭 [**leader（领导）**](#-leader领导) | 帮你把一句模糊的想法定义成一个清晰的**目标**，让 AI 拿着自己跑几个小时到完成 | — |
 | 💽 [**storage-analyzer（清理垃圾）**](#-storage-analyzer清理垃圾) | 一句话扫描 Mac / Windows 整机磁盘，三色分级给清理决策，网页上一键移废纸篓 | [公众号文章](https://mp.weixin.qq.com/s/NyOMIlOD986OC4SI9vmxlA) |
 | 🔥 [**aihot（AI HOT 资讯查询）**](#-aihotai-hot-资讯查询) | 让 Agent 用一句话拿到 aihot.virxact.com 每天的 AI HOT 日报和全部 AI 动态，无需 API Key | [aihot.virxact.com](https://aihot.virxact.com) |
 | 🧹 [**neat-freak（洁癖）**](#-neat-freak洁癖) | 干完活跑一下 `/neat`，自动对齐项目文档、CLAUDE.md、Agent 记忆，并审计规则有没有被执行 | [公众号文章](https://mp.weixin.qq.com/s/tg1wd-iN2gWHWhXdY0faeg) |
@@ -200,6 +201,63 @@
 <table>
 <tr><td>
 
+### 🧭 leader（领导）
+
+> *"你说让测试变绿，最省力的办法不是修代码，是把测试删了。"*
+
+**它只解决一件事：帮你定义目标。**
+
+把你脑子里那句模模糊糊、自己都还没想清楚的需求，变成一份目标任务书——粘进目标模式（Claude Code 的 `/goal`、Codex 的目标模式）就能让 AI 独立跑几个小时到完成。你全程只做一次复制粘贴。
+
+**为什么是「目标」**
+
+人和 AI 的协作单位一直在变大：过去是一轮对话，后来是一个任务，2026 年的今天是一个目标——你给它一个目标，它自己拆任务、自己调工具、自己验证、失败自己重试，跑一整夜，你只管验收。
+
+但当 AI 真能跑一整夜，一个以前还能临场补救的问题就变得致命：**你的目标写得对不对**。短任务跑偏你看一眼就能纠正；长程任务跑偏，你睡醒时它已经朝错误方向狂奔了八小时。它越勤奋，浪费得越彻底。
+
+**目标里最重要的部分，是「什么不能做」**
+
+肯尼迪那句登月宣言，关键不在「登月」，在后半句——把人送上月球，**然后安全带回地球**。多出来的「安全返回」四个字，一笔删掉了「单程票」这个最省钱的解法。
+
+Goal 告诉 AI 往哪走，Harness 告诉它哪些路不许走。**没有 Harness 的 Goal，AI 永远会找到你没想到的捷径。**
+
+**目标七问（心法）**
+
+给 AI 定目标就像派一艘船出海，出海前你必须想清楚七件事，缺一条都不行：
+
+| # | 问题 | 出海版 | 落到任务书 |
+|---|---|---|---|
+| 1 | **目的** | 我们为什么出这趟海，找香料还是探航线 | 遇到没写到的岔路口，它靠这句自己判断 |
+| 2 | **完成态** | 「出去转一圈」不算，「带回三船香料」才算 | 具体到靠岸那一刻机器就能判 |
+| 3 | **证据** | 谁上船清点货舱。不能船长说满载就是满载 | 每条验收都要贴出实际命令输出 |
+| 4 | **反作弊** | 不许劫商船凑数：指标达成，事一件没干 | 把偷懒路径一条条点名禁止 |
+| 5 | **地界** | 只许走这三条航线；粮食只够三十天 | 白名单 + 跑满 N 轮即停 |
+| 6 | **取舍** | 风暴里保货还是保船？不说，船长只能猜 | 「算得对 > 做得全 > 做得快」 |
+| 7 | **未知** | 空白海域别硬闯也别抛锚，记下来绕过去 | 拿不准的写进待裁决清单，跳过做别的 |
+
+还有第零问：**这张海图是你自己测的，还是听来的**。所以它动笔前一定先钻进代码库亲手跑一遍——文档里写的命令，实际可能根本不存在。
+
+**怎么用**
+
+跟它说一句想法（下面任意一句都能触发），它先实测调研，再问你最多 5 个必须你拍板的问题，然后写出任务书。全程约 12 分钟。
+
+```
+帮我给 agent 写个目标
+帮我详细拆一下这个目标
+写个 goal 提示词
+让 agent 自己跑这个项目
+```
+
+产出是纯 Markdown，没有目标模式的 Agent 直接粘贴发送也一样用。拿到任务书后推荐用规划强的模型出目标、执行强的模型跑长程——我自己是 Claude Fable 5 规划 + GPT-5.6 Sol 执行，国产的 Kimi K3 规划、GLM-5.2 执行也不错。
+
+→ [SKILL.md](./leader/SKILL.md)
+
+</td></tr>
+</table>
+
+<table>
+<tr><td>
+
 ### 💽 storage-analyzer（清理垃圾）
 
 > *"清 Mac 垃圾这件事，过去十几年都靠 CleanMyMac 这种翻译层软件。现在一个 skill 就够了。"*
@@ -222,7 +280,7 @@ CleanMyMac 是个写死规则的软件，扫到一个 3.8G 的 Chrome 文件夹�
 
 全程只读扫描，绝不擅自动手。删除操作必须你在浏览器上点按钮 + 浏览器弹框二次确认才执行。本地服务跑在 127.0.0.1 + 随机端口 + token，安全模型上三套白名单分级（绿灯能删、橙灯只能移废纸篓、红灯只能打开）。
 
-**🌐 跨平台**：macOS 完整实测；Windows 代码就绪（多盘符已支持），首次用建议留个心眼
+macOS 完整实测；Windows 代码就绪（多盘符已支持），首次用建议留个心眼。
 
 **怎么触发**
 
@@ -252,26 +310,21 @@ storage analysis
 
 - 拉今日 / 指定日期的 AI HOT 日报（按主题打包好的成品）
 - 拉精选条目流（每日精编候选池）
+- **看当前最热事件**（按热度排，不是按时间倒序）
 - 按分类拉条目（模型 / 产品 / 行业 / 论文 / 技巧）
-- 按时间窗口拉（最近 N 天）
+- 按时间窗拉（原生支持过去 24 小时和最近 7 天）
 - 关键词 / 公司 / 主题搜索（"OpenAI 最近发的"、"Sora 相关"、"RAG 论文"）
+- **把当前全部精选同步到本地**，之后只接收变化
 
 **怎么触发**
 
 ```
 今天 AI 圈有什么新东西
+现在 AI 圈最热的事件是什么
 看一下 5 月 6 号的 AI 日报
 最近一周的 AI 论文
-看下精选条目
 最近 OpenAI 有什么发布
-```
-
-**🌐 跨平台**：Claude Code · Codex CLI · Cursor · Gemini CLI · OpenCode · Cline · Windsurf
-
-**🇨🇳 国内直链**（无需翻墙）：
-
-```
-curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh | bash
+把 AI HOT 当前全部精选同步到本地
 ```
 
 → [SKILL.md](./aihot/SKILL.md) · [aihot.virxact.com](https://aihot.virxact.com) · [接入指南](https://aihot.virxact.com/agent)
@@ -318,10 +371,6 @@ curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh | bash
 
 纯代码任务、整理数据 / 周报这类请求不会触发它——它只管项目知识收尾。
 
-**🌐 跨平台**：遵循 Agent Skills 开放标准，Claude Code、Codex、Qoder、Kimi Code、iFlow、CodeBuddy、Cursor 等都能装；不支持 Skill 的 Agent 把 `SKILL.md` 当规则文件引用即可。
-
-[![Tessl](https://img.shields.io/badge/Tessl-0.1.1-3B82F6?style=flat-square)](https://tessl.io/registry/khazix-skills/neat-freak)
-
 → [SKILL.md](./neat-freak/SKILL.md) · [公众号讲解](https://mp.weixin.qq.com/s/tg1wd-iN2gWHWhXdY0faeg)
 
 </td></tr>
@@ -351,8 +400,14 @@ curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh | bash
 - 单纯查个名词解释 — 那种问题用普通对话就行，杀鸡用牛刀
 - 写公众号文章 — 那个用下面的 khazix-writer
 
-[![ClawHub](https://img.shields.io/badge/ClawHub-v1.0.0-EC4899?style=flat-square)](https://clawhub.ai)
-[![Tessl](https://img.shields.io/badge/Tessl-published-3B82F6?style=flat-square)](https://tessl.io/registry/khazix-skills/hv-analysis)
+**怎么触发**
+
+```
+研究一下 Cursor 这家公司
+帮我做个竞品分析
+这个产品到底是怎么回事
+帮我做个 deep research
+```
 
 → [SKILL.md](./hv-analysis/SKILL.md) · [公众号讲解](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA)
 
@@ -382,8 +437,14 @@ curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh | bash
 - 四层自检体系（结构、节奏、内容、文字）
 - 一套风格示例库（可以让 AI 直接对照）
 
-[![ClawHub](https://img.shields.io/badge/ClawHub-v1.0.0-EC4899?style=flat-square)](https://clawhub.ai)
-[![Tessl](https://img.shields.io/badge/Tessl-0.1.1-3B82F6?style=flat-square)](https://tessl.io/registry/khazix-skills/khazix-writer)
+**怎么触发**
+
+```
+帮我写篇文章
+把这个素材写成长文
+按我的风格写一下
+帮我续写
+```
 
 → [SKILL.md](./khazix-writer/SKILL.md) · [公众号讲解](https://mp.weixin.qq.com/s/AtxGrii_K-nzkwUM9SNhEg)
 
