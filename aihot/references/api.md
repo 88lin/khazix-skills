@@ -89,7 +89,13 @@ GET /api/v1/items?mode=all&window=24h&limit=50
 
 `GET /api/v1/hot-topics`
 
-响应为 `{schemaVersion, count, items}`，不是可续页集合。保持 API 热度顺序。item 包含 `sourceCount`、`signalCount`、`sourceNames` 与 `latestAt`；其中 `sourceCount` 是独立信源数。热点与普通资讯字段不同，不得把两种响应强行混成同一列表协议。
+响应为 `{schemaVersion, count, items}`，不是可续页集合。保持 API 热度顺序。item 包含 `sourceCount`、`signalCount`、`sourceNames`、`latestAt` 与 `links.story`（事件页）；其中 `sourceCount` 是独立信源数。热点与普通资讯字段不同，不得把两种响应强行混成同一列表协议。
+
+### 事件详情
+
+`GET /api/v1/stories/{publicId}`
+
+publicId 取自 hot-topics 条目 `links.story` 的末段，或另一个 story 响应里 storyline／related 的引用；没有检索端点，不得猜测 id。响应为 `{schemaVersion, story}`：`story.reports` 是逆序报道时间线（每条含站内 `links.aihot`）；`story.digest` 是随事件演化增量更新的 AI 综述（与旧结论矛盾处会显式标注），`story.latest` 是最新进展一句话；`storyline`／`related` 是关联事件引用（含 `links.api` 可直接续跳）。事件被合并时返回 308，跟随 Location 即可。`status` 为 `settled` 表示事件已收束（超过 48 小时无新报道）。
 
 ### 日报
 
