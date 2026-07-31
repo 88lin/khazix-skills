@@ -89,7 +89,7 @@ GET /api/v1/items?mode=all&window=24h&limit=50
 
 `GET /api/v1/hot-topics`
 
-响应为 `{schemaVersion, count, items}`，不是可续页集合。保持 API 热度顺序。item 包含 `sourceCount`、`signalCount`、`sourceNames`、`latestAt`，并可能包含可选的 `links.story`（给人阅读的 HTML 事件页）；其中 `sourceCount` 是独立信源数。热点与普通资讯字段不同，不得把两种响应强行混成同一列表协议。
+响应为 `{schemaVersion, count, items}`，不是可续页集合。保持 API 热度顺序。item 包含 `sourceCount`、`signalCount`、`sourceNames`、`latestAt`，并可能包含可选的 `links.story`（给人阅读的 HTML 事件页）；其中 `sourceCount` 是独立精选信源数，`signalCount` 是按运营主体去重后的独立氛围票组数，事件接收的独立氛围票组总数不设上限。热点与普通资讯字段不同，不得把两种响应强行混成同一列表协议。
 
 ### 事件详情
 
