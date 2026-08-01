@@ -74,7 +74,7 @@
 - `score`
 - `selected`
 
-其中 `originalTitle`、`summary`、`publishedAt`、`category` 和 `score` 的键始终存在，但值可以是 `null`；展示前必须判空。`id`、`title`、`source.name`、`links.aihot`、`links.original`、`discoveredAt` 和 `selected` 为非空值。响应还可能带可选的 `attribution`，客户端不得依赖它一定存在，也不得因未来新增未知字段而报错。`page.count` 是本页条数，不是全库总数。
+其中 `originalTitle`、`summary`、`publishedAt`、`category` 和 `score` 的键始终存在，但值可以是 `null`；展示前必须判空。`id`、`title`、`source.name`、`links.aihot`、`links.original`、`discoveredAt` 和 `selected` 为非空值。响应还可能带可选的 `attribution`，客户端不得依赖它一定存在，也不得因未来新增未知字段而报错。公开产品只需在正常可发现的位置标注一次「数据来源：AI HOT」并链接本站，无需逐条展示 `attribution`；私人自用或仅内部使用无需界面署名。`page.count` 是本页条数，不是全库总数。
 
 示例：
 
