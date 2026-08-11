@@ -1,8 +1,10 @@
-# AI HOT — Agent Skill
+# AIHOT — Agent Skill
 
-让支持 Agent Skills（`SKILL.md`）的工具查询 [AI HOT](https://aihot.virxact.com) 的当前精选、最近公开动态、热点和日报，也可低流量维护当前全部精选副本。
+让支持 Agent Skills（`SKILL.md`）的工具查询 [AIHOT](https://aihot.virxact.com) 的当前精选、最近公开动态、热点和日报，也可低流量维护当前全部精选副本。
 
 基础能力长期保持匿名、只读、无需 API Key。Skill 1.x 使用稳定的 `/api/v1/*` 契约；后端抓取、评分、排序、缓存和模型可以继续迭代，用户无需因此更新 Skill。
+
+AIHOT Skill 1.5.1 遵循公开使用规则 1.0：个人非商业、公益非商业和组织内部使用免费；任何面向外部的商业产品、收费服务、客户交付、代理接口、数据转售、公开镜像或批量公开再分发，须事先取得书面授权。
 
 ## 安装前可审阅
 
@@ -23,6 +25,12 @@ bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) --target gem
 bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) --target copilot
 bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) --target opencode
 ```
+
+安装器会在本地生成 `.aihot-actor-id`（权限 `0600`），更新时保留。它是可轮换的随机 UUID，
+仅用于把同一直接消费实例跨网页、Skill、MCP、RSS 与 API 去重，不是账号、API Key 或授权。
+从 AIHOT 接入页复制命令时可用 `--actor <uuid-v4>` 与其它渠道复用同一随机假名标识；不传也能正常无账号使用。
+如不希望参与跨渠道分析，执行同一安装命令并追加 `--no-actor`。安装器会保存本地退出标记，
+后续正常更新与旧目录迁移都不会重新生成 Actor；以后显式传入 `--actor <uuid-v4>` 才会重新加入。
 
 Claude Code 使用自己的目录：
 
@@ -51,6 +59,8 @@ references/errors.md
 ```
 
 人类说明 `README.md` 不会被放进 Agent 的 Skill 安装目录。
+安装器还会在本地生成只忽略 `.aihot-actor-id` 与 `.aihot-actor-disabled` 的 `.gitignore`；
+它不从公网下载，避免项目级安装时把本地假名状态误提交进 Git。
 
 ## 旧目录迁移
 
@@ -63,7 +73,7 @@ references/errors.md
 ~/.config/opencode/skills/aihot
 ```
 
-发现旧副本时默认停止，不会静默覆盖或再造一份。确认这些目录都是应被新 1.0 包替换的旧 AI HOT Skill 后，显式迁移：
+发现旧副本时默认停止，不会静默覆盖或再造一份。确认这些目录都是应被当前 1.x 包替换的旧 AIHOT Skill 后，显式迁移：
 
 ```bash
 bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) \
@@ -81,7 +91,7 @@ bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) \
 2. 让 Agent 列出它发现的 skills，确认只有一份 `aihot`。
 3. 提问：`过去 24 小时 AI 圈最重要的 5 件事是什么？`
 
-成功答案会写明时间窗，给出中文摘要，并把标题链接到 AI HOT 站内阅读页。
+成功答案会写明时间窗，给出中文摘要，并把标题链接到 AIHOT 站内阅读页。
 
 ## 更新
 
@@ -96,20 +106,21 @@ bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) \
 - 公司、产品和主题关键词。
 - 当前全部精选：首次完整快照，之后只接收新增、编辑和撤选。
 
-公开池不等于 AI HOT 全库：原公众号爆文榜来源（`mp_hot`）、未审内容、低相关条目和已合并重复条目不会返回；正常参与精选的官方／媒体公众号来源仍可能出现。
+公开池不等于 AIHOT 全库：原公众号爆文榜来源（`mp_hot`）、未审内容、低相关条目和已合并重复条目不会返回；正常参与精选的官方／媒体公众号来源仍可能出现。
 
 当前边界：
 
 - 超过 7 天的普通历史搜索暂不保证。
-- “最近一周精选”不是 AI HOT 编辑成品周报。正式周报和月报目前只有 [周报网页](https://aihot.virxact.com/weekly) 与 [月报网页](https://aihot.virxact.com/monthly)，尚无 Skill／API／RSS 端点。
-- v1 items 返回摘要、AI HOT 阅读页和第三方原文链接，不提供按 ID 获取单篇正文的接口。站内阅读页有权利且已抓到时才显示正文；全文 RSS 也只对允许再分发的来源内联正文。
+- “最近一周精选”不是 AIHOT 编辑成品周报。正式周报和月报目前只有 [周报网页](https://aihot.virxact.com/weekly) 与 [月报网页](https://aihot.virxact.com/monthly)，尚无 Skill／API／RSS 端点。
+- v1 items 返回摘要、AIHOT 阅读页和第三方原文链接，不提供按 ID 获取单篇正文的接口。站内阅读页有权利且已抓到时才显示正文；全文 RSS 也只对允许再分发的来源内联正文。
 
 ## 内容、许可与署名
 
 - `LICENSE` 中的 MIT License 只覆盖 Skill 指令与随附文件。
-- API 数据适用 [AI HOT 公开接入条款](https://aihot.virxact.com/terms)。
-- 第三方原文及全文版权仍归原作者，不因经过 AI HOT 而改变。
-- 公开产品只需在页面底部、关于页或数据来源页等正常可发现的位置标注一次「数据来源：AI HOT」并链接本站，无需逐条署名；私人自用或仅内部使用无需界面署名。attribution 与 canonical 继续用于机器识别和追溯；重要引用回第三方原文核对。
+- AIHOT 服务与数据输出适用 [AIHOT 公开使用规则](https://aihot.virxact.com/terms)。匿名、无需 API Key 只说明技术访问方式，不代表所有用途均获许可。
+- 第三方原文及全文版权仍归原作者，不因经过 AIHOT 而改变。
+- 个人非商业、公益非商业和组织内部使用免费。面向外部的商业产品、收费服务、客户交付、代理接口、数据转售、公开镜像、批量公开再分发或对外模型产品须先取得书面授权；仅标注「数据来源：AIHOT」不代表已取得授权。
+- 授权联系 `wzglyay@virxact.com`。attribution 与 canonical 继续用于机器识别和追溯；重要引用回第三方原文核对。
 
 详细接入文档：[aihot.virxact.com/agent](https://aihot.virxact.com/agent)
 

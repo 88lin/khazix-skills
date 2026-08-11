@@ -1,4 +1,4 @@
-# AI HOT v1 API 参考
+# AIHOT v1 API 参考
 
 只在需要完整参数、字段、分页或构建客户端时读取本文件。普通资讯问答优先遵循 `SKILL.md` 的默认路由。
 
@@ -10,7 +10,7 @@
 - 所有 cursor 都是不透明书签：只原样回传给产生它的同一端点和同一查询，不解析、不修改、不跨查询复用。
 - 未知参数、无效参数、损坏或跨查询 cursor 都返回明确的 Problem JSON，不会静默回到第一页。
 - 对同一完整 URL 保存响应 `ETag`；下次发送 `If-None-Match`。`304` 表示内容未变化。
-- items cursor 没有按时间自动失效，但 24 小时／7 天是滚动窗口，较老条目可能在两次翻页之间自然离开窗口；需要精确镜像时改用 selected snapshot + changes。
+- items cursor 没有按时间自动失效，但 24 小时／7 天是滚动窗口，较老条目可能在两次翻页之间自然离开窗口；需要精确私有副本时改用 selected snapshot + changes。
 
 ## 操作
 
@@ -74,7 +74,7 @@
 - `score`
 - `selected`
 
-其中 `originalTitle`、`summary`、`publishedAt`、`category` 和 `score` 的键始终存在，但值可以是 `null`；展示前必须判空。`id`、`title`、`source.name`、`links.aihot`、`links.original`、`discoveredAt` 和 `selected` 为非空值。响应还可能带可选的 `attribution`，客户端不得依赖它一定存在，也不得因未来新增未知字段而报错。公开产品只需在正常可发现的位置标注一次「数据来源：AI HOT」并链接本站，无需逐条展示 `attribution`；私人自用或仅内部使用无需界面署名。`page.count` 是本页条数，不是全库总数。
+其中 `originalTitle`、`summary`、`publishedAt`、`category` 和 `score` 的键始终存在，但值可以是 `null`；展示前必须判空。`id`、`title`、`source.name`、`links.aihot`、`links.original`、`discoveredAt` 和 `selected` 为非空值。响应还可能带可选的 `attribution`，客户端不得依赖它一定存在，也不得因未来新增未知字段而报错。`attribution` 只用于来源追溯，不能替代外部商业用途所需的书面授权。`page.count` 是本页条数，不是全库总数。
 
 示例：
 
@@ -114,7 +114,7 @@ GET /api/v1/dailies/2026-07-24
 ### 正文与周期报告边界
 
 - `items` 只返回标题、摘要、来源、时间、评分和链接，不返回正文，也没有 `/api/v1/items/{id}`。用户要深入阅读时提供 `links.aihot` 和 `links.original`，不要抓网页或全文 RSS 冒充单篇正文 API。
-- AI HOT 编辑成品周报与月报目前只有 `/weekly` 和 `/monthly` 网页，没有 v1、Skill 或 RSS 端点。“最近一周精选”仍是滚动 7 天 items 查询，不得称为正式周报。
+- AIHOT 编辑成品周报与月报目前只有 `/weekly` 和 `/monthly` 网页，没有 v1、Skill 或 RSS 端点。“最近一周精选”仍是滚动 7 天 items 查询，不得称为正式周报。
 
 ### 完整精选同步
 
@@ -124,7 +124,7 @@ GET /api/v1/selected/snapshot?fields=minimal&limit=500&page=<opaque>
 GET /api/v1/selected/changes?cursor=<opaque>&limit=100
 ```
 
-只有用户明确要求当前全部精选或持久镜像时才使用。完整算法见 [sync.md](sync.md)；不要仅凭本文件实现同步状态机。
+只有用户明确要求当前全部精选或私有完整副本时才使用。完整算法见 [sync.md](sync.md)；不要仅凭本文件实现同步状态机。公开镜像、代理接口、数据转售或面向外部的商业产品仍须事先取得书面授权。
 
 snapshot 是**分页**的，一次请求拿不到全部：
 
@@ -137,7 +137,7 @@ snapshot 是**分页**的，一次请求拿不到全部：
 响应里有两个不同的游标，**不要混用**：
 
 - `cursor`：同步游标，逐页恒定，指向第一页取到的水位。**翻完所有页之后**才拿它调 `changes`。
-- `nextPage`：翻页游标，只在本轮快照内有效。`hasMore=true` 时必须继续翻，否则镜像不完整。
+- `nextPage`：翻页游标，只在本轮快照内有效。`hasMore=true` 时必须继续翻，否则副本不完整。
 
 规模参考：当前约 2900 条，`fields=default` 全量约 3.1MB（gzip 1.05MB），`fields=minimal` 约 1.08MB（gzip 247KB）。条目只增不减，会逐年变大——不确定就用 `minimal`，需要摘要时再取 `default`。
 
@@ -152,11 +152,11 @@ snapshot 是**分页**的，一次请求拿不到全部：
 
 ## 字段语义
 
-- `links.aihot`：AI HOT 站内中文阅读页，默认主链接。
+- `links.aihot`：AIHOT 站内中文阅读页，默认主链接。
 - `links.original`：第三方原文，仅在用户要出处时附加。
 - `originalTitle`：来源原标题，可能不是英文。
 - `publishedAt`：第三方原文发布时间。展示前把 ISO 时间转换到 `Asia/Shanghai`。
-- `discoveredAt`：AI HOT 首次收到时间。`publishedAt` 为空时可回退使用，但必须标为“AI HOT 收录时间”。
+- `discoveredAt`：AIHOT 首次收到时间。`publishedAt` 为空时可回退使用，但必须标为“AIHOT 收录时间”。
 - `score`：0—100 总分，可能为空，不表示当前响应按它排序。
 - `selected`：是否属于当前精选。
 - `category`：允许未来增加新值；不要把未知值当成响应损坏。
