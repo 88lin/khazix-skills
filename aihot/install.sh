@@ -13,6 +13,9 @@ ACTOR_DISABLED=0
 SKIP_ACTOR_GENERATION=0
 MIGRATE_LEGACY=0
 SHARED_TARGET=0
+CLAUDE_COMPAT_LINK=""
+CLAUDE_COMPAT_CREATED=0
+TARGET_ACTIVATED=0
 TMP_ROOT=""
 TARGET_BACKUP=""
 COMMITTED=0
@@ -31,7 +34,7 @@ Usage:
 
 Targets:
   codex|gemini|copilot|opencode|agents  ~/.agents/skills/aihot
-  claude                                ~/.claude/skills/aihot
+  claude                                ~/.agents/skills/aihot + ~/.claude/skills/aihot symlink
 
 Examples:
   bash install.sh --target codex
@@ -183,6 +186,12 @@ hash_file() {
 restore_on_failure() {
   local i
   if [[ "$COMMITTED" -eq 0 ]]; then
+    if [[ "$CLAUDE_COMPAT_CREATED" -eq 1 && -L "$CLAUDE_COMPAT_LINK" ]]; then
+      rm -f -- "$CLAUDE_COMPAT_LINK" || true
+    fi
+    if [[ "$TARGET_ACTIVATED" -eq 1 && -e "$INSTALL_DIR" ]]; then
+      rm -rf -- "$INSTALL_DIR" || true
+    fi
     if [[ -n "$TARGET_BACKUP" && -e "$TARGET_BACKUP" && ! -e "$INSTALL_DIR" ]]; then
       mv "$TARGET_BACKUP" "$INSTALL_DIR" || true
     fi
@@ -258,11 +267,9 @@ fi
 
 case "$TARGET" in
   claude)
-    INSTALL_DIR="$HOME/.claude/skills/aihot"
-    [[ "$MIGRATE_LEGACY" -eq 0 ]] || {
-      echo "[ERR] --migrate-legacy is only for the shared ~/.agents/skills target" >&2
-      exit 2
-    }
+    INSTALL_DIR="$HOME/.agents/skills/aihot"
+    SHARED_TARGET=1
+    CLAUDE_COMPAT_LINK="$HOME/.claude/skills/aihot"
     ;;
   codex|gemini|copilot|opencode|agents)
     INSTALL_DIR="$HOME/.agents/skills/aihot"
@@ -290,6 +297,7 @@ validate_target_path
 
 if [[ "$SHARED_TARGET" -eq 1 ]]; then
   LEGACY_CANDIDATES=(
+    "$HOME/.claude/skills/aihot"
     "${CODEX_HOME:-$HOME/.codex}/skills/aihot"
     "$HOME/.gemini/skills/aihot"
     "$HOME/.copilot/skills/aihot"
@@ -297,6 +305,10 @@ if [[ "$SHARED_TARGET" -eq 1 ]]; then
   )
   for legacy in "${LEGACY_CANDIDATES[@]}"; do
     [[ "$legacy" != "$INSTALL_DIR" ]] || continue
+    # 厂商目录本身可能已链接到 ~/.agents/skills；同一实体不算重复副本。
+    if [[ -e "$INSTALL_DIR" && -e "$legacy" && "$legacy" -ef "$INSTALL_DIR" ]]; then
+      continue
+    fi
     if [[ -e "$legacy" || -L "$legacy" ]]; then
       [[ -d "$legacy" && ! -L "$legacy" && -f "$legacy/SKILL.md" ]] || {
         fail "legacy path is not a regular Skill directory: $legacy"
@@ -468,6 +480,21 @@ fi
 if ! mv "$PACKAGE_DIR" "$INSTALL_DIR"; then
   fail "failed to activate the validated package"
 fi
+TARGET_ACTIVATED=1
+
+if [[ -n "$CLAUDE_COMPAT_LINK" ]]; then
+  mkdir -p "$(dirname "$CLAUDE_COMPAT_LINK")"
+  if [[ -e "$CLAUDE_COMPAT_LINK" ]]; then
+    [[ "$CLAUDE_COMPAT_LINK" -ef "$INSTALL_DIR" ]] || {
+      fail "Claude compatibility path points somewhere else: $CLAUDE_COMPAT_LINK"
+    }
+  else
+    ln -s "$INSTALL_DIR" "$CLAUDE_COMPAT_LINK" || {
+      fail "failed to create Claude compatibility symlink: $CLAUDE_COMPAT_LINK"
+    }
+    CLAUDE_COMPAT_CREATED=1
+  fi
+fi
 COMMITTED=1
 
 cleanup_committed_backup "$TARGET_BACKUP"
@@ -485,6 +512,9 @@ else
 fi
 if [[ "$LEGACY_COUNT" -gt 0 ]]; then
   echo "✓ Replaced $LEGACY_COUNT legacy copy/copies with the shared installation."
+fi
+if [[ -n "$CLAUDE_COMPAT_LINK" ]]; then
+  echo "✓ Claude Code compatibility points to the shared installation: $CLAUDE_COMPAT_LINK"
 fi
 echo ""
 echo "Next: restart your Agent or start a new conversation, then ask:"

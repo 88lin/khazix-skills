@@ -4,7 +4,7 @@
 
 基础能力长期保持匿名、只读、无需 API Key。Skill 1.x 使用稳定的 `/api/v1/*` 契约；后端抓取、评分、排序、缓存和模型可以继续迭代，用户无需因此更新 Skill。
 
-AIHOT Skill 1.5.1 遵循公开使用规则 1.0：个人非商业、公益非商业和组织内部使用免费；任何面向外部的商业产品、收费服务、客户交付、代理接口、数据转售、公开镜像或批量公开再分发，须事先取得书面授权。
+本 Skill 遵循公开使用规则：个人非商业、公益非商业和组织内部使用免费；任何面向外部的商业产品、收费服务、客户交付、代理接口、数据转售、公开镜像或批量公开再分发，须事先取得书面授权。
 
 ## 安装前可审阅
 
@@ -17,13 +17,16 @@ AIHOT Skill 1.5.1 遵循公开使用规则 1.0：个人非商业、公益非商�
 
 以下 Bash 命令适用于 macOS、Linux 与 WSL。Windows 原生环境请让当前 Agent 按本页说明安装，不要把 Bash 命令直接粘贴到 PowerShell。脚本不会猜测平台，必须显式指定 `--target` 或 `--dir`，无参数只显示帮助并退出。
 
-Codex、Gemini CLI、GitHub Copilot 和 OpenCode 共享 Agent Skills 通用目录 `~/.agents/skills/aihot`：
+Skill 正文只安装到 Agent Skills 通用目录 `~/.agents/skills/aihot`：
 
 ```bash
-bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) --target codex
-bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) --target gemini
-bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) --target copilot
-bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) --target opencode
+bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) --target agents
+```
+
+`codex`、`gemini`、`copilot` 与 `opencode` 仍可作为同一路径的兼容目标名。Claude Code 按官方约定从 `~/.claude/skills` 发现个人 Skill；使用下面命令时，安装器会把正文安装到通用目录，并创建一个指向同一实体的兼容软链，不复制第二份 Skill：
+
+```bash
+bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) --target claude
 ```
 
 安装器会在本地生成 `.aihot-actor-id`（权限 `0600`），更新时保留。它是可轮换的随机 UUID，
@@ -31,12 +34,6 @@ bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) --target ope
 从 AIHOT 接入页复制命令时可用 `--actor <uuid-v4>` 与其它渠道复用同一随机假名标识；不传也能正常无账号使用。
 如不希望参与跨渠道分析，执行同一安装命令并追加 `--no-actor`。安装器会保存本地退出标记，
 后续正常更新与旧目录迁移都不会重新生成 Actor；以后显式传入 `--actor <uuid-v4>` 才会重新加入。
-
-Claude Code 使用自己的目录：
-
-```bash
-bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) --target claude
-```
 
 显式使用通用目录或自定义目录：
 
@@ -67,6 +64,7 @@ references/errors.md
 安装器会检查以下旧位置，防止同名 Skill 被一个 Agent 重复发现：
 
 ```text
+~/.claude/skills/aihot
 ~/.codex/skills/aihot
 ~/.gemini/skills/aihot
 ~/.copilot/skills/aihot
@@ -83,7 +81,7 @@ bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) \
 
 也可以使用 `--dir <旧目录>` 原地更新单一旧副本；这种方式不会处理其它重复副本。
 
-如果同时给 Claude Code 的专用目录和通用 `~/.agents/skills` 目录安装，同一台机器上兼容多目录的 Agent 可能发现两份 `aihot`。请选择当前 Agent 实际使用的一处安装，并在安装后确认只发现一份。
+迁移完成后，厂商目录不再保留独立副本；Claude Code 的兼容入口是指向 `~/.agents/skills/aihot` 的软链。
 
 ## 安装后验证
 
@@ -112,7 +110,7 @@ bash <(curl -fsSL https://aihot.virxact.com/aihot-skill/install.sh) \
 
 - 超过 7 天的普通历史搜索暂不保证。
 - “最近一周精选”不是 AIHOT 编辑成品周报。正式周报和月报目前只有 [周报网页](https://aihot.virxact.com/weekly) 与 [月报网页](https://aihot.virxact.com/monthly)，尚无 Skill／API／RSS 端点。
-- v1 items 返回摘要、AIHOT 阅读页和第三方原文链接，不提供按 ID 获取单篇正文的接口。站内阅读页有权利且已抓到时才显示正文；全文 RSS 也只对允许再分发的来源内联正文。
+- v1 items 返回摘要、推荐理由、AIHOT 阅读页和第三方原文链接，不提供按 ID 获取单篇正文的接口。站内阅读页有权利且已抓到时才显示正文；全文 RSS 也只对允许再分发的来源内联正文。
 
 ## 内容、许可与署名
 

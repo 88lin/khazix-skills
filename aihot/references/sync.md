@@ -4,10 +4,10 @@
 
 ## 首次建立私有副本
 
-snapshot 是分页的，一轮 bootstrap 需要多次请求。当前约 2900 条：`fields=minimal` 约 1.08MB（gzip 247KB），`fields=default` 约 3.1MB（gzip 1.05MB），且只增不减。
+snapshot 是分页的，一轮 bootstrap 需要多次请求；集合会持续增长，不能假设一次响应能够取完。
 
 1. 选择字段模式：
-   - 只维护 id、标题、站内链接和分类：`fields=minimal`（默认首选，省四倍流量）。
+   - 只维护 id、标题、站内链接和分类：`fields=minimal`（默认首选，传输字段更少）。
    - 需要摘要或第三方原文链接：`fields=default`。
 2. 请求 `/api/v1/selected/snapshot?fields=<模式>&limit=500`。
 3. 累积本页 `items`；记下响应里的 `cursor`（逐页恒定）。
