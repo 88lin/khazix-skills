@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-SITE="https://aihot.virxact.com"
+SITE="https://aihot.news"
 TARGET=""
 INSTALL_DIR=""
 ACTOR_ID=""
@@ -38,7 +38,7 @@ Targets:
 
 Examples:
   bash install.sh --target codex
-  # Optional: copy your own Actor UUID from https://aihot.virxact.com/agent
+  # Optional: copy your own Actor UUID from https://aihot.news/agent
   bash install.sh --target codex --actor <uuid-v4-from-agent-page>
   bash install.sh --target codex --no-actor
   bash install.sh --target agents --migrate-legacy
@@ -48,7 +48,7 @@ The installer never uses sudo. It downloads the complete runtime package,
 validates every SHA-256, then replaces one explicit target directory.
 
 If an older AIHOT Skill ran this script without a target, do not guess or
-retry with sudo. Open https://aihot.virxact.com/aihot-skill/README.md and give
+retry with sudo. Open https://aihot.news/aihot-skill/README.md and give
 its recommended update prompt to the Agent that owns the current Skill folder.
 EOF
 }
