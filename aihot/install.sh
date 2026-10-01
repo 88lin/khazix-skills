@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # AIHOT Agent Skill installer.
-# Downloads and validates the complete runtime package before one directory swap.
+# Downloads and validates the complete runtime package before one directory swap. The package
+# (SKILL.md, LICENSE, agents/openai.yaml) is the last one: AIHOT's abilities live on its server.
 
 set -euo pipefail
 
@@ -358,7 +359,7 @@ while IFS= read -r line || [[ -n "$line" ]]; do
     fail "unsafe package path: $relative_path"
   }
   case "$relative_path" in
-    SKILL.md|LICENSE|agents/openai.yaml|references/api.md|references/sync.md|references/errors.md) ;;
+    SKILL.md|LICENSE|agents/openai.yaml) ;;
     *) fail "unexpected non-runtime package path: $relative_path" ;;
   esac
   [[ "$SEEN_FILES" != *$'\n'"$relative_path"$'\n'* ]] || fail "duplicate manifest path: $relative_path"
@@ -376,15 +377,12 @@ while IFS= read -r line || [[ -n "$line" ]]; do
   chmod 0644 "$output_path"
 done < "$MANIFEST_FILE"
 
-[[ "$FILE_COUNT" -eq 6 ]] || fail "runtime package must contain exactly 6 files"
+[[ "$FILE_COUNT" -eq 3 ]] || fail "runtime package must contain exactly 3 files"
 
 for required in \
   SKILL.md \
   LICENSE \
-  agents/openai.yaml \
-  references/api.md \
-  references/sync.md \
-  references/errors.md
+  agents/openai.yaml
 do
   [[ -f "$PACKAGE_DIR/$required" ]] || fail "runtime package is missing $required"
 done

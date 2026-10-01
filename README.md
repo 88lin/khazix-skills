@@ -173,7 +173,7 @@
 |---|---|---|
 | 🧭 [**leader（领导）**](#-leader领导) | 帮你把一句模糊的想法定义成一个清晰的**目标**，让 AI 拿着自己跑几个小时到完成 | — |
 | 💽 [**storage-analyzer（清理垃圾）**](#-storage-analyzer清理垃圾) | 一句话扫描 Mac / Windows 整机磁盘，三色分级给清理决策，网页上一键移废纸篓 | [公众号文章](https://mp.weixin.qq.com/s/NyOMIlOD986OC4SI9vmxlA) |
-| 🔥 [**aihot（AI HOT 资讯查询）**](#-aihotai-hot-资讯查询) | 让 Agent 用一句话拿到 aihot.virxact.com 每天的 AI HOT 日报和全部 AI 动态，无需 API Key | [aihot.virxact.com](https://aihot.virxact.com) |
+| 🔥 [**aihot（AI HOT 资讯查询）**](#-aihotai-hot-资讯查询) | 让 Agent 用一句话拿到 aihot.news 每天的 AI HOT 日报和全部 AI 动态，无需 API Key | [aihot.news](https://aihot.news) |
 | 🧹 [**neat-freak（洁癖）**](#-neat-freak洁癖) | 干完活跑一下 `/neat`，自动对齐项目文档、CLAUDE.md、Agent 记忆，并审计规则有没有被执行 | [公众号文章](https://mp.weixin.qq.com/s/tg1wd-iN2gWHWhXdY0faeg) |
 | 🔭 [**hv-analysis（横纵分析法）**](#-hv-analysis横纵分析法) | 想搞懂一个产品/公司/概念是怎么回事，丢给它，给你一份万字 PDF 研究报告 | [公众号文章](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA) |
 | ✍️ [**khazix-writer（卡兹克写作）**](#-khazix-writer卡兹克写作) | 装上之后，Agent 用我的口吻和节奏写公众号长文 | [公众号文章](https://mp.weixin.qq.com/s/AtxGrii_K-nzkwUM9SNhEg) |
@@ -304,17 +304,20 @@ storage analysis
 
 > *"AI 圈一天发太多东西，等我反应过来已经过气了——干脆让 Agent 帮我每天扫一遍。"*
 
-让支持 SKILL.md 的 Agent 用最自然的中文一句话拿到 [aihot.virxact.com](https://aihot.virxact.com) 每天的 AI HOT 日报和全部 AI 动态。无需 API Key、无需配 MCP server。
+让支持 SKILL.md 的 Agent 用最自然的中文一句话拿到 [aihot.news](https://aihot.news) 每天的 AI HOT 日报和全部 AI 动态。无需 API Key、无需配 MCP server。
+
+**装一次就好，以后不用再更新**：Skill 只负责提问和转述，查询和整理都在 aihot.news 服务端完成，新能力自动生效。装过旧版的最后更新一次即可。
 
 **它能做什么**
 
 - 拉今日 / 指定日期的 AI HOT 日报（按主题打包好的成品）
 - 拉精选条目流（每日精编候选池）
 - **看当前最热事件**（按热度排，不是按时间倒序）
+- 查 Tibo（Codex）额度重置和发重置卡的最新动态
 - 按分类拉条目（模型 / 产品 / 行业 / 论文 / 技巧）
 - 按时间窗拉（原生支持过去 24 小时和最近 7 天）
 - 关键词 / 公司 / 主题搜索（"OpenAI 最近发的"、"Sora 相关"、"RAG 论文"）
-- **把当前全部精选同步到本地**，之后只接收变化
+- **看某个热点的来龙去脉**（最新进展、报道时间线和 AI 综述）
 
 **怎么触发**
 
@@ -324,10 +327,10 @@ storage analysis
 看一下 5 月 6 号的 AI 日报
 最近一周的 AI 论文
 最近 OpenAI 有什么发布
-把 AI HOT 当前全部精选同步到本地
+现在最热的那件事，来龙去脉是什么
 ```
 
-→ [SKILL.md](./aihot/SKILL.md) · [aihot.virxact.com](https://aihot.virxact.com) · [接入指南](https://aihot.virxact.com/agent)
+→ [SKILL.md](./aihot/SKILL.md) · [aihot.news](https://aihot.news) · [接入指南](https://aihot.news/agent)
 
 </td></tr>
 </table>

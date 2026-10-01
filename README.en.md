@@ -28,7 +28,7 @@ Every skill here is a structured instruction set that agents load directly. Foll
 |---|---|---|
 | 🧭 [**leader**](#-leader) | Turns a vague idea into a clearly defined **goal** an agent can run for hours, on its own, to completion | — |
 | 💽 [**storage-analyzer**](#-storage-analyzer) | One sentence to scan your whole Mac / Windows drive — three-tier cleanup plan, one-click trash from the browser | [Article (Chinese)](https://mp.weixin.qq.com/s/NyOMIlOD986OC4SI9vmxlA) |
-| 🔥 [**aihot**](#-aihot-ai-hot-news-query) | Lets your agent pull AI HOT's daily report and all AI news from aihot.virxact.com with one Chinese sentence — no API key | [aihot.virxact.com](https://aihot.virxact.com) |
+| 🔥 [**aihot**](#-aihot-ai-hot-news-query) | Lets your agent pull AI HOT's daily report and all AI news from aihot.news with one Chinese sentence — no API key | [aihot.news](https://aihot.news) |
 | 🧹 [**neat-freak**](#-neat-freak) | After a session, run `/neat` to reconcile docs, CLAUDE.md, and agent memory, then audit whether project rules are actually followed | [Article (Chinese)](https://mp.weixin.qq.com/s/tg1wd-iN2gWHWhXdY0faeg) |
 | 🔭 [**hv-analysis**](#-hv-analysis-horizontal-vertical-analysis) | Drop a product/company/concept into it and get a 10k–30k word PDF research report | [Article (Chinese)](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA) |
 | ✍️ [**khazix-writer**](#-khazix-writer) | Makes the agent write long-form Chinese articles in my personal voice | [Article (Chinese)](https://mp.weixin.qq.com/s/AtxGrii_K-nzkwUM9SNhEg) |
@@ -159,17 +159,20 @@ storage analysis
 
 > *"The AI world ships too much in a day. By the time I notice, it's already old news — let an agent scan it for me."*
 
-Lets any SKILL.md-supporting agent pull AI HOT's daily report and all AI news from [aihot.virxact.com](https://aihot.virxact.com) with one natural Chinese sentence. No API key, no MCP server config.
+Lets any SKILL.md-supporting agent pull AI HOT's daily report and all AI news from [aihot.news](https://aihot.news) with one natural Chinese sentence. No API key, no MCP server config.
+
+**Install once, never update again**: the skill only asks and relays; the querying and formatting happen on aihot.news, so new abilities arrive on their own. If you installed an older version, update one last time.
 
 **What it can do**
 
 - Pull today's or a specific date's AI HOT daily report (pre-packaged by topic)
 - Pull the selected items stream (daily editorial candidate pool)
 - **See what's hottest right now** (ranked by heat, not reverse-chronological)
+- Check the latest Tibo (Codex) usage resets and reset-card grants
 - Pull by category (models / products / industry / papers / tips)
 - Pull by time window (past 24 hours and last 7 days are natively supported)
 - Keyword / company / topic search ("recent OpenAI releases", "Sora-related", "RAG papers")
-- **Mirror the entire current selection locally**, then receive only the changes
+- **Follow a hot story from start to finish** (latest development, report timeline and AI digest)
 
 **How to trigger** (Chinese — the underlying API is Chinese-curated)
 
@@ -179,10 +182,10 @@ Lets any SKILL.md-supporting agent pull AI HOT's daily report and all AI news fr
 看一下 5 月 6 号的 AI 日报
 最近一周的 AI 论文
 最近 OpenAI 有什么发布
-把 AI HOT 当前全部精选同步到本地
+现在最热的那件事，来龙去脉是什么
 ```
 
-→ [SKILL.md](./aihot/SKILL.md) · [aihot.virxact.com](https://aihot.virxact.com) · [Integration guide](https://aihot.virxact.com/agent)
+→ [SKILL.md](./aihot/SKILL.md) · [aihot.news](https://aihot.news) · [Integration guide](https://aihot.news/agent)
 
 </td></tr>
 </table>
