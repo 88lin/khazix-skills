@@ -172,7 +172,7 @@
 | 名字 | 一句话 | 讲解 |
 |---|---|---|
 | 🧭 [**leader（领导）**](#-leader领导) | 帮你把一句模糊的想法定义成一个清晰的**目标**，让 AI 拿着自己跑几个小时到完成 | — |
-| 💽 [**storage-analyzer（清理垃圾）**](#-storage-analyzer清理垃圾) | 一句话扫描 Mac / Windows 整机磁盘，三色分级给清理决策，网页上一键移废纸篓 | [公众号文章](https://mp.weixin.qq.com/s/NyOMIlOD986OC4SI9vmxlA) |
+| 💽 [**storage-analyzer（清理垃圾）**](#-storage-analyzer清理垃圾) | 一句话扫描 Mac / Windows / Linux 整机磁盘，三色分级给清理决策，网页上一键移废纸篓 | [公众号文章](https://mp.weixin.qq.com/s/NyOMIlOD986OC4SI9vmxlA) |
 | 🔥 [**aihot（AI HOT 资讯查询）**](#-aihotai-hot-资讯查询) | 让 Agent 用一句话拿到 aihot.news 每天的 AI HOT 日报和全部 AI 动态，无需 API Key | [aihot.news](https://aihot.news) |
 | 🧹 [**neat-freak（洁癖）**](#-neat-freak洁癖) | 干完活跑一下 `/neat`，自动对齐项目文档、CLAUDE.md、Agent 记忆，并审计规则有没有被执行 | [公众号文章](https://mp.weixin.qq.com/s/tg1wd-iN2gWHWhXdY0faeg) |
 | 🔭 [**hv-analysis（横纵分析法）**](#-hv-analysis横纵分析法) | 想搞懂一个产品/公司/概念是怎么回事，丢给它，给你一份万字 PDF 研究报告 | [公众号文章](https://mp.weixin.qq.com/s/Y_uRMYBmdLWUPnz_ac7jWA) |
@@ -192,14 +192,32 @@
 
 安装时保留整个 Skill 目录，包括 `references/`、`scripts/`、`assets/` 和 `agents/`（如有）。只粘贴 `SKILL.md` 可以参考方法，但不能替代配套脚本和资源。普通聊天模型没有文件或联网工具时，无法完成本机扫描、实时研究或生成文件；请用具备相应工具的 Agent。搜索工具不限模型或厂商。
 
-Claude Code 也可通过官方仓库的插件目录安装全部六个 Skill：
+手动安装就把整个目录放进 Agent 读取的 skills 目录：
+
+| 工具 | 所有项目可用 | 只在某个项目里用 |
+|---|---|---|
+| Claude Code | `~/.claude/skills/<skill-name>/` | `.claude/skills/<skill-name>/` |
+| Codex、Gemini CLI、GitHub Copilot 等 | `~/.agents/skills/<skill-name>/` | `.agents/skills/<skill-name>/` |
+
+也可以把全部六个 Skill 当成一个插件装，以后跟着版本更新。Claude Code 里输入：
 
 ```text
 /plugin marketplace add KKKKhazix/khazix-skills
 /plugin install khazix-skills@khazix-skills
 ```
 
-更新时使用 `/plugin marketplace update khazix-skills`，再 `/plugin update khazix-skills@khazix-skills`；是否自动更新取决于客户端设置。避免同时保留同名插件安装和手动复制版本。
+更新：在 `/plugin` 的 Installed 里选 khazix-skills 点 Update now，或在终端运行 `claude plugin update khazix-skills@khazix-skills`。第三方插件目录默认不自动更新，想自动更新就在 `/plugin` 的 Marketplaces 里选 khazix-skills，打开 Enable auto-update。
+
+Codex 在终端运行：
+
+```bash
+codex plugin marketplace add KKKKhazix/khazix-skills
+codex plugin add khazix-skills@khazix-skills
+```
+
+更新：`codex plugin marketplace upgrade khazix-skills`。
+
+插件方式装的 Skill 带前缀，例如 `khazix-skills:leader`。插件和手动复制只留一种，避免同一个 Skill 出现两份。
 
 固定版本和完整下载包见 [Releases](https://github.com/KKKKhazix/khazix-skills/releases)。第三方市场可能滞后或漏带资源，完整内容以此仓库和 Release 为准。
 
@@ -220,7 +238,7 @@ Claude Code 也可通过官方仓库的插件目录安装全部六个 Skill：
 
 **它只解决一件事：帮你定义目标。**
 
-把你脑子里那句模模糊糊、自己都还没想清楚的需求，变成一份目标任务书——粘进目标模式（Claude Code 的 `/goal`、Codex 的目标模式）就能让 AI 独立跑几个小时到完成。你全程只做一次复制粘贴。
+把你脑子里那句模模糊糊、自己都还没想清楚的需求，变成一份目标任务书——粘进目标模式（Claude Code 和 Codex 都是 `/goal`）就能让 AI 独立跑几个小时到完成。你全程只做一次复制粘贴。
 
 **为什么是「目标」**
 
@@ -293,7 +311,7 @@ CleanMyMac 是个写死规则的软件，扫到一个 3.8G 的 Chrome 文件夹�
 
 全程只读扫描，绝不擅自动手。网页删除逐次确认；用户已明确授权具体清理对象时，Agent 也可代为执行，无需重复确认。本地服务跑在 127.0.0.1 + 随机端口 + token，安全模型上三套白名单分级（绿灯能删、橙灯只能移废纸篓、红灯只能打开）。
 
-支持 macOS / Windows。扫描、删除边界和只读缓存修复由跨平台 CI 验证；回收站桌面交互需在当前系统核实。服务连续 30 分钟无请求自动退出。
+支持 macOS / Windows / Linux（Linux 目前在 Ubuntu + GNOME 上实测）。扫描、删除边界和只读缓存修复由跨平台 CI 验证；回收站桌面交互需在当前系统核实。服务连续 30 分钟无请求自动退出。
 
 **怎么触发**
 
@@ -323,11 +341,11 @@ storage analysis
 
 **它能做什么**
 
-- 拉今日 / 指定日期的 AI HOT 日报（按主题打包好的成品）
+- 拉今日 / 指定日期的 AI HOT 日报（按主题打包好的成品），以及最新或指定一期的周报、月报
 - 拉精选条目流（每日精编候选池）
 - **看当前最热事件**（按热度排，不是按时间倒序）
-- 查 Tibo（Codex）额度重置和发重置卡的最新动态
-- 按分类拉条目（模型 / 产品 / 行业 / 论文 / 技巧）
+- 查 Codex、Claude、Antigravity 额度重置和发重置卡的最新动态
+- 按分类拉条目（模型 / 产品 / 行业 / 论文 / 教程 / 观点）
 - 按时间窗拉（原生支持过去 24 小时和最近 7 天）
 - 关键词 / 公司 / 主题搜索（"OpenAI 最近发的"、"Sora 相关"、"RAG 论文"）
 - **看某个热点的来龙去脉**（最新进展、报道时间线和 AI 综述）
@@ -475,7 +493,7 @@ storage analysis
 
 我是数字生命卡兹克，虚实传媒创始人，努力地分享一些有趣的 AI 干货，也愿我们永远对世界保持好奇。
 
-这些 skill 都是我自己每天在用的，开源出来如果对你有帮助，给个 ⭐ 就行。有问题或建议，欢迎在 Issues / Discussions 里说一声。
+这些 skill 都是我自己每天在用的，开源出来如果对你有帮助，给个 ⭐ 就行。有问题或建议，欢迎在 Issues 里说一声。
 
 ---
 
